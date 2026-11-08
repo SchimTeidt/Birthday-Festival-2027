@@ -1,159 +1,42 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Festival 2027 · Location Scout</title><meta name="theme-color" content="#101815"><meta name="robots" content="noindex,nofollow"><style>
-:root{font-family:Inter,system-ui,sans-serif;color:#edf3f0;background:#101815}*{box-sizing:border-box}body{margin:0}header{padding:42px max(20px,calc((100vw - 1100px)/2));background:linear-gradient(125deg,#183e32,#111c1a 70%);border-bottom:1px solid #385146}small,.muted{color:#a8b8b0}h1{font-size:clamp(30px,5vw,56px);margin:8px 0}h2{font-size:21px}main{max-width:1100px;margin:auto;padding:24px 18px 70px}.tag{color:#9ee7bf;letter-spacing:.15em;font-size:12px;font-weight:800}nav{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0}button,select,input{font:inherit}button{cursor:pointer;background:#24362f;color:#edf3f0;border:1px solid #50685c;padding:11px 15px;border-radius:10px}button.active,button:hover{background:#b4e9b6;color:#102119}input,select{background:#1d2a25;color:#fff;border:1px solid #50685c;border-radius:9px;padding:11px;width:100%}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.stat,.card,.panel{background:#1b2923;border:1px solid #354a3f;border-radius:16px;padding:18px}.stat strong{display:block;font-size:27px;color:#c3efc4}.toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:18px 0}.cards{display:grid;gap:12px}.card{display:grid;grid-template-columns:52px 1fr;gap:14px}.rank{font-size:27px;font-weight:800;color:#a8d6ad}.card h3{margin:0 0 7px;font-size:20px}.pill{display:inline-block;border:1px solid #51675b;border-radius:30px;padding:5px 9px;font-size:12px;margin:3px 5px 3px 0;color:#c7d8cc}.card p{margin:9px 0;color:#bdc9c1;line-height:1.55}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}a{color:#a9e5b7}section{margin:30px 0}a,button,input,select{touch-action:manipulation}a{overflow-wrap:anywhere}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #c3efc4;outline-offset:3px}.hidden{display:none!important}.panel{line-height:1.65}.check{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid #33473c}.check input{width:20px;height:20px;flex:none;margin-top:3px}.money{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.money label{font-size:13px;color:#cbd7ce}.money input{margin-top:5px}.total{font-size:30px;color:#b7eab9;font-weight:800}.note{border-left:3px solid #d8b56d;padding:12px 16px;background:#292a22;color:#e5dbc1;margin:15px 0}.foot{font-size:13px;color:#a8b8b0}@media(max-width:700px){.grid,.toolbar,.money{grid-template-columns:1fr}.card{grid-template-columns:36px 1fr}header{padding:30px 20px}}</style></head><body>
-<header><div class="tag">ALLGÄU · PRIVATE FESTIVAL EDITION</div><h1>THE BIG BIRTHDAY<br>FESTIVAL '27</h1><p>Wunschtermin 13.–15. August 2027 · rund 100 Gäste · 5–6 DJs · Funktion-One · Camping</p><small>Planungs-Dashboard · Webversion 8. November 2026 · Termin und Locations unbestätigt</small></header>
-<main><div class="grid"><div class="stat"><small>Location-Kandidaten</small><strong id="count">0</strong></div><div class="stat"><small>Bestätigte Verfügbarkeiten</small><strong>0</strong></div><div class="stat"><small>Geplantes Basisbudget</small><strong id="budgetStat">8.000 €</strong></div></div>
-<nav><button class="active" data-tab="locations">📍 Locations</button><button data-tab="budget">€ Budget</button><button data-tab="plan">✓ Aufgaben & Zeitplan</button><button data-tab="brief">✉ Anfragevorlage</button></nav>
-<div id="locations"><h2>Locations aus der ersten Ideensammlung</h2><p class="muted">Die 15 Kandidaten, Ortsangaben und Links wurden aus der ersten Datei übernommen und noch nicht unabhängig geprüft. Die Reihenfolge ist nur eine vorläufige Arbeitsreihenfolge, keine geprüfte Eignungsbewertung. Preise, Kapazität, Camping, Nachtmusik und Verfügbarkeit sind offen.</p><div class="toolbar"><input id="search" placeholder="Location oder Ort suchen …" aria-label="Location suchen"><select id="type" aria-label="Kategorie"><option value="">Alle Kategorien</option><option>Gruppenhaus</option><option>Eventlocation</option><option>Hütte</option><option>Gelände</option></select><select id="sort" aria-label="Sortierung"><option value="rank">Arbeitsreihenfolge</option><option value="name">Name A–Z</option></select></div><div class="cards" id="cards"></div><p class="foot">Ausgeschlossen: Seminarhaus Sulzbrunn (aus der Standortauswahl entfernt).</p></div>
-<div id="budget" class="hidden"><h2>Budget-Simulator</h2><p class="muted">Alle Ausgaben sind frei gesetzte Beispielansätze, keine Angebote. Rechne nur mit tatsächlich zahlenden Gästen; Kinder und beitragsfreie Gäste nicht automatisch mitzählen. Werte lassen sich anpassen.</p><div class="panel"><div class="money"><label>Zahlende Gäste<input id="guests" type="number" min="0" max="500" value="100"></label><label>Beitrag je Gast (€)<input id="fee" type="number" min="0" value="50"></label><label>Beiträge der Gastgeber gesamt (€)<input id="hosts" type="number" min="0" value="3000"></label><label>Location inkl. Auf-/Abbautage (€)<input id="venue" type="number" min="0" value="2500"></label><label>Technik inkl. Transport (€)<input id="tech" type="number" min="0" value="2500"></label><label>Essen (€)<input id="food" type="number" min="0" value="1600"></label><label>Getränke (€)<input id="drinks" type="number" min="0" value="1300"></label><label>Sanitär, Strom, Sonstiges (€)<input id="other" type="number" min="0" value="1100"></label></div><hr style="border-color:#405548"><div>Verfügbares Budget: <b id="income"></b></div><div>Geschätzte Ausgaben: <b id="expenses"></b></div><div>Saldo inkl. 15 % Kostenpuffer:</div><div class="total" id="balance"></div><p class="foot">Nicht eingerechnet: mögliche Genehmigungen, zusätzliche Sicherheit, Versicherungen oder GEMA. Abhängig von der konkreten Veranstaltung prüfen.</p></div></div>
-<div id="plan" class="hidden"><h2>Organisation & Meilensteine</h2><p class="muted">Budget und Häkchen werden in diesem Browser gespeichert, sofern lokaler Speicher verfügbar ist. Keine Synchronisierung mit anderen Geräten oder Personen. Die Termine sind Planungsvorschläge.</p><div class="panel" id="checks"></div></div>
-<div id="brief" class="hidden"><h2>Anfrage an eine Location</h2><div class="panel"><p>Guten Tag,</p><p>wir planen voraussichtlich vom 13. bis 15. August 2027 ein privates gemeinsames Geburtstagsfestival mit rund 100 Gästen. Für Aufbau und Abbau benötigen wir idealerweise Zugang vom 11. bis 16. August.</p><p>Tagsüber ist ein familienfreundliches Programm mit Live-Musik und Workshops geplant. Abends möchten wir mit fünf bis sechs DJs und einer angemieteten Funktion-One-Anlage feiern, möglichst bis in die frühen Morgenstunden.</p><p>Können Sie uns mitteilen, ob Ihr Gelände dafür geeignet und im genannten Zeitraum verfügbar ist? Besonders interessieren uns: exklusive Nutzung, zulässige Musikzeiten und Lautstärke, Camping und Betten, Sanitäranlagen, Strom, Außenbereich und wetterfeste Innenfläche, Selbstversorgung, eigene Getränke oder Getränkebindung sowie sämtliche Miet- und Nebenkosten.</p><p>Vielen Dank und freundliche Grüße</p></div><p class="foot">Vorlage zum Markieren und Kopieren. Keine Anfrage wurde versendet.</p></div>
-<section class="note"><b>Vor einer Buchung schriftlich klären:</b> Exklusivnutzung, Musikzeiten und Beschallung, Camping, wetterfeste Räume, Sanitär und Strom, eigene Getränke sowie Zugang für Aufbau und Abbau. Erforderliche Freigaben und Auflagen mit Betreiber und gegebenenfalls Gemeinde klären. Bisher wurden keine Anfragen versendet.</section>
-<p class="foot">Diese Planungsseite ist öffentlich. Keine Gästelisten, Kontaktdaten oder Passwörter eintragen. Kein Login, keine Gästeanmeldung und kein gemeinsamer Datenstand. Die App übermittelt Budget und Häkchen nicht an einen Server; beim Seitenaufruf wird der Hosting-Anbieter kontaktiert.</p><p class="foot" id="storageStatus" role="status" aria-live="polite"></p><noscript><p class="note">Bitte JavaScript im Browser aktivieren, damit Suche, Budget und Aufgaben funktionieren.</p></noscript></main>
-<script>
-const data=[
-
-  [
-    "Buronhütte",
-    "Wertach",
-    "Hütte",
-    "Prüfen: Alleinlage, Zufahrt mit Technik, Innenkapazität, Betten, Zelte und Musikzeiten.",
-    "https://buronhuette.com/",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Gauklerhof",
-    "Waltenhofen",
-    "Eventlocation",
-    "Prüfen: Scheune, Garten, Camping und exklusiver Nachtbetrieb.",
-    "https://gauklerhof-allgaeu.de/",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Eventlocation Eschach",
-    "Buchenberg",
-    "Eventlocation",
-    "Prüfen: Innen- und Außenfläche, Camping, eigene DJs und zulässige Musikzeiten.",
-    "https://eventlocation-eschach.com/",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Umweltstation Unterallgäu",
-    "Legau",
-    "Gelände",
-    "Prüfen: Eignung für eine private Feier, Zeltinfrastruktur und nächtlicher Musikbetrieb.",
-    "https://www.bzu.de/umweltstation-unterallgaeu/gruppen-selbstversorger/",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Landhaus Pfanzelt",
-    "Weitnau",
-    "Gruppenhaus",
-    "Prüfen: Selbstversorgung, Betten, Zusatz-Zelte, 100 Gäste und nächtliche Beschallung.",
-    "https://www.gruppenhaus.de/landhaus-pfanzelt-im-allgaeu-weitnau-hs3751.html",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Beach34",
-    "Wiggensbach",
-    "Eventlocation",
-    "Prüfen: Innen- und Außenbereich, Umgebung, Camping und Übernachtungsoptionen.",
-    "https://beach34.de/eventlocation/",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Allgäu Event Center",
-    "Kaufbeuren",
-    "Eventlocation",
-    "Prüfen: Mehrtägige Exklusivnutzung, Musik, Außengelände und Camping.",
-    "https://www.all-kart.de/allgaeueventcenter",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Outdoor Zentrum Allgäu",
-    "Blaichach",
-    "Gruppenhaus",
-    "Prüfen: Komplette Anmietung, Betten, Selbstversorgung und nächtliche Musik.",
-    "https://www.raftingzentrum.de/hostel/hostel-exklusiv.html",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Berghaus Rusch",
-    "Gunzesried",
-    "Gruppenhaus",
-    "Prüfen: Selbstversorgung, Kapazität für 100 Gäste und Eignung für DJ-Nächte.",
-    "https://www.berghaus-rusch.de/",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Kaminwerk",
-    "Memmingen",
-    "Eventlocation",
-    "Prüfen: Private Wochenendmiete, eigener Technikaufbau und Camping in der Nähe.",
-    "https://www.kaminwerk.de/",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Wieshof Unterhub",
-    "Bad Wurzach",
-    "Gruppenhaus",
-    "Prüfen: Gesamtkapazität, Entfernung, Selbstversorgung und nächtliche Musik.",
-    "https://www.gruppenfreizeiten.de/wieshof-unterhub-bad-wurzach",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Funkenbauers Alm",
-    "Unterthingau",
-    "Hütte",
-    "Prüfen: Anbieter, genaue Lage, Kapazität, Camping, Selbstversorgung und Musikzeiten.",
-    "",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Jawoll Eventlocation",
-    "Pfronten",
-    "Eventlocation",
-    "Prüfen: DJ-Betrieb, Musikzeiten, eigenes Soundsystem, Mehrtagesmiete und Camping.",
-    "https://www.unserehochzeitslocation.de/hochzeitslocation/jawoll-eventlocation/",
-    "Preis offen · kein Angebot eingeholt"
-  ],
-  [
-    "Gästehäuser Rettenberg",
-    "Rettenberg",
-    "Gruppenhaus",
-    "Prüfen: Konkretes Haus, Exklusivmiete, Betten, Camping und Nachtbetrieb.",
-    "https://www.ferienwerk-koeln.de/unterkunft/gruppenhaus-rettenberg/",
-    "Preis offen · kein Angebot eingeholt"
-  ]
-];
-const root=document;const euro=n=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
-function render(){const q=document.getElementById('search').value.toLowerCase(),type=document.getElementById('type').value,sort=document.getElementById('sort').value;let arr=data.map((d,i)=>({d,i})).filter(x=>(!type||x.d[2]===type)&&x.d.join(' ').toLowerCase().includes(q));if(sort==='name')arr.sort((a,b)=>a.d[0].localeCompare(b.d[0],'de'));document.getElementById('count').textContent=data.length;document.getElementById('cards').innerHTML=arr.length?arr.map(({d,i})=>`<article class="card"><div class="rank">${String(i+1).padStart(2,'0')}</div><div><h3>${d[0]}</h3><span class="pill">${d[1]}</span><span class="pill">${d[2]}</span><span class="pill">Termin: unbestätigt</span><p>${d[3]}</p><small>${d[5]}</small><div class="actions">${d[4]?`<a href="${d[4]}" target="_blank" rel="noopener noreferrer">Bisheriger Link (ungeprüft) ↗</a>`:''}</div></div></article>`).join(''):'<p>Keine passenden Locations gefunden.</p>'}
-['search','type','sort'].forEach(id=>document.getElementById(id).addEventListener('input',render));render();
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));['locations','budget','plan','brief'].forEach(id=>document.getElementById(id).classList.toggle('hidden',id!==b.dataset.tab))}));
-function budget(){let v=id=>Math.max(0,Math.min(id==='guests'?500:1000000,Number(document.getElementById(id).value)||0)),inc=v('guests')*v('fee')+v('hosts'),exp=['venue','tech','food','drinks','other'].reduce((s,id)=>s+v(id),0),bal=inc-exp*1.15;document.getElementById('income').textContent=euro(inc);document.getElementById('budgetStat').textContent=euro(inc);document.getElementById('expenses').textContent=euro(exp);document.getElementById('balance').textContent=euro(bal);document.getElementById('balance').style.color=bal<0?'#ffb3a6':'#b7eab9'}
-document.querySelectorAll('#budget input').forEach(el=>el.addEventListener('input',budget));budget();
-const tasks=['November 2026: Save-the-Date verschicken','Bis Dezember 2026: Top-Locations anfragen und besichtigen','Vor Buchung: Nachtbeschallung schriftlich klären','Vor Buchung: Getränke-Regelung und Selbstversorgung klären','Vor Buchung: Zugang 11.–16. August bestätigen','Januar 2027: Location verbindlich buchen','Februar/März 2027: Einladungs-Website mit Anmeldung veröffentlichen','Frühjahr 2027: Funktion-One-Verleiher und Technikangebote vergleichen','Mai 2027: Gästezahl, Camping und Essen verbindlich erfassen','Juni/Juli 2027: Strom, Sanitär, Sicherheit, Wetterplan und Versicherung klären','August 2027: Küche, Getränke, Kühlung und Helferschichten finalisieren','11./12. August: Aufbau','13.–15. August: Festival','16. August: Abbau und Reinigung'];document.getElementById('checks').innerHTML=tasks.map(t=>`<label class="check"><input type="checkbox"><span>${t}</span></label>`).join('');
-
-const storageKey='birthday-festival-2027:planner:v1';
-const budgetFields=Array.from(document.querySelectorAll('#budget input'));
-const checkFields=Array.from(document.querySelectorAll('#checks input'));
-const storageStatus=document.getElementById('storageStatus');
-try{
-  const saved=JSON.parse(localStorage.getItem(storageKey)||'null');
-  if(saved && saved.version===1){
-    budgetFields.forEach(el=>{const value=saved.budget?.[el.id];if(typeof value==='number'&&Number.isFinite(value)&&value>=0){el.value=Math.min(el.id==='guests'?500:1000000,value);}});
-    checkFields.forEach((el,i)=>{el.checked=saved.checks?.[i]===true;});
-  }
-  localStorage.setItem(storageKey+':test','1');localStorage.removeItem(storageKey+':test');
-  storageStatus.textContent='Lokale Speicherung aktiv: Budget und Aufgaben bleiben in diesem Browser erhalten, bis die Website-Daten gelöscht werden. Kein gemeinsamer Datenstand.';
-}catch(e){storageStatus.textContent='Lokaler Speicher ist hier nicht verfügbar. Änderungen bleiben nur während dieser geöffneten Sitzung erhalten.';}
-function saveLocal(){
-  try{
-    const state={version:1,budget:{},checks:checkFields.map(el=>el.checked)};
-    budgetFields.forEach(el=>{state.budget[el.id]=Math.max(0,Math.min(el.id==='guests'?500:1000000,Number(el.value)||0));});
-    localStorage.setItem(storageKey,JSON.stringify(state));
-  }catch(e){storageStatus.textContent='Speichern nicht möglich. Änderungen bleiben nur in dieser Sitzung erhalten.';}
-}
-budgetFields.forEach(el=>el.addEventListener('input',saveLocal));
-checkFields.forEach(el=>el.addEventListener('change',saveLocal));
-budget();
-</script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Birthday Festival '27 · Allgäu</title>
+<meta name="theme-color" content="#151815"><meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Unsere Planungszentrale für ein privates Geburtstagswochenende im Allgäu. Locations, Budget, Aufgaben und Programmidee.">
+<link rel="stylesheet" href="festival.v3.css"><script defer src="festival.v3.js"></script>
+</head>
+<body>
+<a class="skip" href="#content">Zum Inhalt</a>
+<header class="masthead"><a class="brand" href="#locations"><span class="mark" aria-hidden="true">✳</span> BIRTHDAY<span class="brand-light"> / ALLGÄU</span></a><span class="version">DESIGN 3.0</span></header>
+<section class="hero" aria-labelledby="festival-title">
+<div class="hero-inner">
+<div class="hero-copy"><div class="eyebrow"><i></i> DREI GEBURTSTAGE. EIN WOCHENENDE.</div><h1 id="festival-title">BIRTHDAY<br><span>FESTIVAL</span><em>’27</em></h1><p>Tagsüber zusammen draußen.<br>Nachts zusammen auf dem Dancefloor.</p><div class="hero-actions"><a class="button lime" href="#locations">Unsere Locations <span>↗</span></a><a class="text-link" href="#program">Die Festival-Idee ↓</a></div><div class="hero-meta">ALLGÄU · PRIVAT · NUR GELADENE GÄSTE</div></div>
+<div class="hero-art">
+<figure class="postcard"><img src="https://cdn.eventinc.de/provider_pictures/pictures/000/180/883/cropped/eventlocation-gauklerhof-allgaeu-kempten.jpg" alt="Abendstimmung im Innenhof des Gauklerhofs" width="900" height="650" fetchpriority="high" referrerpolicy="no-referrer"><figcaption><span>01 / LOCATION-INSPIRATION</span><a href="https://www.eventinc.de/eventlocation/kempten/gauklerhof-allgaeu" target="_blank" rel="noopener noreferrer">Gauklerhof · Bildquelle ↗</a></figcaption></figure>
+<div class="date-ticket"><small>WUNSCHTERMIN</small><strong>13—15</strong><span>AUGUST 2027</span><div>FR → SO<br><b>Noch nicht bestätigt</b></div></div>
+<span class="hero-note">Der Ort steht noch nicht fest.</span>
+</div>
+</div>
+<div class="ribbon"><span>100 GÄSTE GEPLANT</span><b>✳</b><span>5–6 DJs</span><b>✳</b><span>CAMPING GESUCHT</span><b>✳</b><span>FAMILIE & FREUNDE</span><b>✳</b><span>LIVE-MUSIK & WORKSHOPS</span></div>
+</section>
+<div class="nav-shell"><nav class="tabs" aria-label="Planungsbereiche"><a href="#locations" class="active" aria-current="page">01 <span>Locations</span></a><a href="#budget">02 <span>Budget</span></a><a href="#program">03 <span>Festival-Idee</span></a><a href="#plan">04 <span>Aufgaben</span></a><a href="#brief">05 <span>Anfrage</span></a></nav></div>
+<main id="content">
+<section id="locations" class="view">
+<div class="section-top"><div><div class="kicker">DIE SUCHE NACH UNSEREM ORT</div><h2>Raus ins Grüne.<br>Oder rein in die Halle.</h2></div><p>Abgelegen. Platz für alle. Draußen entspannt, drinnen eine Alternative für Wetter und Nacht. Bis etwa 90 Minuten ab Kempten als Suchrahmen.</p></div>
+<div class="status-strip"><span><b id="count">14</b> Kandidaten</span><span><b>0</b> Buchungszusagen</span><span><b>Offen</b> Preise & Verfügbarkeit</span></div>
+<p class="research-note">Die Reihenfolge ist eine Arbeitspriorität, keine bestätigte Eignungsbewertung. Nachtmusik, Camping, Getränke und Termin müssen für jeden Ort geklärt werden. Sulzbrunn bleibt ausgeschlossen.</p>
+<div class="filters"><label class="search-label"><span class="sr-only">Location oder Ort suchen</span><input id="search" type="search" placeholder="Location oder Ort suchen …"></label><label><span class="sr-only">Kategorie</span><select id="type"><option value="">Alle Kategorien</option><option>Hütte</option><option>Eventlocation</option><option>Gruppenhaus</option><option>Gelände</option></select></label><label><span class="sr-only">Sortierung</span><select id="sort"><option value="rank">Arbeitsreihenfolge</option><option value="name">Name A–Z</option></select></label><button id="favorites" class="filter-star" aria-pressed="false">☆ Merkliste</button></div>
+<p id="resultCount" class="results" role="status" aria-live="polite"></p><div id="cards" class="cards"></div>
+<aside class="callout"><span class="callout-star">✳</span><div><b>Erst die Möglichkeiten klären. Dann verlieben.</b><p>Kein Bild bestätigt Camping, freie Termine oder eine Party bis morgens. Die offenen Punkte stehen auf jeder Karte. Die Quellen sind direkt verlinkt.</p></div></aside>
+</section>
+<section id="budget" class="view" hidden><div class="kicker">GUTE PARTY. KLARE ZAHLEN.</div><h2>Was geht mit<br>unserem Budget?</h2><p class="intro">Die bisherigen Beispielwerte bleiben erhalten. Es sind keine Mietangebote. Nur zahlende Gäste mitzählen; Kinder und beitragsfreie Gäste nicht automatisch einrechnen.</p><div class="budget-layout"><div class="surface"><div class="fields" id="budgetFields"></div></div><aside class="budget-summary"><small>GEPLANT VERFÜGBAR</small><strong id="income"></strong><dl><div><dt>Kosten ohne Reserve</dt><dd id="expenses"></dd></div><div><dt>Zusätzliche Reserve (15 %)</dt><dd id="reserve"></dd></div></dl><small>ÜBRIG / FINANZIERUNGSLÜCKE</small><strong id="balance"></strong><p id="breakEven"></p><p class="small">Fehlende Kosten ergänzen, etwa Transport, Sanitär, Kühlung oder notwendige Absicherung. Die Reserve wird zusätzlich gerechnet.</p></aside></div><h3>Weniger Zusagen? Direkt gegenrechnen.</h3><div id="scenarios" class="scenarios"></div><p class="small">Bei diesen Szenarien bleiben die eingegebenen Kosten unverändert. Tatsächliche Essens- und Getränkekosten können mit der Gästezahl variieren.</p></section>
+<section id="program" class="view" hidden><div class="kicker">UNSER WOCHENENDE · KONZEPT, NOCH KEIN LINE-UP</div><h2>Ein bisschen Auszeit.<br>Eine ordentliche Party.</h2><p class="intro">Drei Tage mit Freunden und Familie. Tagsüber offen für Musik, Workshops und gemeinsame Zeit, abends mit DJs. Konkrete Zeiten richten sich nach der Location.</p><div class="program-grid"><article class="program-card peach"><span>FR / 13.08.</span><h3>Ankommen.<br>Runterkommen.</h3><p>Zelte aufbauen, Freunde begrüßen, gemeinsam essen. Danach Musik und ein erster Abend zusammen.</p><b>Planungsidee · Zeiten offen</b></article><article class="program-card green"><span>SA / 14.08.</span><h3>Tagsüber Familie.<br>Nachts Dancefloor.</h3><p>Live-Musik, eigene Auftritte und Workshops. Am Abend die DJ-Sets mit geplanter Funktion-One-Anlage.</p><b>Musikzeiten mit Betreiber klären</b></article><article class="program-card lilac"><span>SO / 15.08.</span><h3>Langsam machen.<br>Noch zusammen sein.</h3><p>Gemeinsames Frühstück, entspannter Ausklang und Abreise. Keine straffen Takte zum Abschied.</p><b>Ablauf noch abzustimmen</b></article></div><div class="surface logistics"><div><small>AUFBAU GEPLANT</small><h3>Mi / Do · 11.–12.08.</h3><p>Technik, Bar, Küche, Camping und Wetterschutz.</p></div><div><small>ABBAU GEPLANT</small><h3>Mo · 16.08.</h3><p>Rückbau, Reinigung und Übergabe.</p></div></div><div class="callout"><span class="callout-star">↗</span><div><b>Gemeinsam gestalten statt nur konsumieren.</b><p>Musikalische Beiträge, Workshops, Helferschichten und Fahrgemeinschaften gehören zum Konzept. Die Online-Anmeldung dafür ist noch nicht eingerichtet.</p></div></div></section>
+<section id="plan" class="view" hidden><div class="kicker">VON DER IDEE ZUM WOCHENENDE</div><h2>Weniger Zettel.<br>Mehr Überblick.</h2><p class="intro">Planungsvorschläge, keine gebuchten Leistungen. Häkchen und Budget bleiben lokal in diesem Browser; noch keine gemeinsame Bearbeitung.</p><div class="progress-head"><span id="progressText"></span><progress id="progress" max="14" value="0"></progress></div><div id="checks" class="checks"></div></section>
+<section id="brief" class="view" hidden><div class="kicker">DIE WICHTIGEN FRAGEN IN EINER NACHRICHT</div><h2>Passt unser Festival<br>zu eurem Ort?</h2><p class="intro">Zum Kopieren und selbst Versenden. Es wird hier keine E-Mail automatisch verschickt.</p><div class="surface brief"><div class="brief-toolbar"><b id="briefTarget">Allgemeine Location-Anfrage</b><button id="copyBrief" class="button dark">Text kopieren ↗</button></div><textarea id="briefText" aria-label="Anfragevorlage" spellcheck="true"></textarea><p id="copyStatus" class="small" role="status" aria-live="polite"></p></div></section>
+</main>
+<footer><a class="brand" href="#locations"><span class="mark">✳</span> BIRTHDAY / 27</a><div><b>Festival Design 3.0 · 09.11.2026</b><p>Öffentliche Planungsseite. Keine Gästedaten, kein Login, keine Buchung.</p><p id="storageStatus" role="status"></p><details><summary>Bilder & Quellen</summary><p>Locationfotos werden von verlinkten Anbieter- und Portalseiten geladen. Dabei wird der jeweilige Bildserver kontaktiert. Die Quellen stehen bei den Fotos; fehlende Bilder werden nicht durch andere Orte ersetzt. Bilder und Anbieterangaben sind keine Zusage für unser Vorhaben.</p></details></div></footer>
+<dialog id="photoDialog"><button id="closePhoto" aria-label="Foto schließen">×</button><img id="largePhoto" alt=""><div id="photoCaption"></div></dialog>
+<noscript><p class="callout">Bitte JavaScript aktivieren, damit die Locationkarten, der Rechner und die Aufgaben angezeigt werden.</p></noscript>
+</body></html>
